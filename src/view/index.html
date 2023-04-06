@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>C3PO Interface</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      div.main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      div.image {
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image">
+      <img src="./images/cp30.png" alt="C3PO Image">
+    </div>
+
+    <div class="main">
+      <h1>Welcome ! Let's go save the world from the empire. </h1>
+      <h3>It seems the rebels found the plans of the Empire</h3>
+      <h2>Please upload the file, so we can find out our odds of saving the Galaxy !</h2>
+      <form id="get-odds" enctype="multipart/form-data">
+        <input type="file" name="empire" accept=".json">
+        <button type="submit">Upload</button>
+      </form>
+      <h2 id="result"></h2>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+      function sendData() {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData(form);
+
+        xhr.addEventListener("load", (event) => {
+          const data = JSON.parse(event.target.responseText);
+          document.getElementById("result").innerHTML = `We have ${data.result}% chance to reach our destination !`
+        });
+
+        xhr.addEventListener("error", (event) => {
+          console.error(event);
+          document.getElementById("result").innerHTML = `An error occurred during file processing. Please check it and retry.`
+        });
+
+        xhr.open("POST", "http://localhost:8000/odds");
+        xhr.send(formData);
+      }
+
+      const form = document.getElementById("get-odds");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        sendData();
+      });
+    });
+    </script>
+  </body>
+</html>
