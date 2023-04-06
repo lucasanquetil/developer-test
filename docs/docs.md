@@ -19,6 +19,17 @@ In order to run the command_line interface usage, you should not have to install
 ./give-me-the-odds examples/example1/millennium-falcon.json examples/example1/empire.json
 ```
 
+If the executable file doesn't work on your machine, you simply recompile it on your machine with the following command
+```
+pyinstaller --onefile give_me_the_odds.py
+```
+Then you file find in the _dist_ folder, a `give_me_the_odds` executable, which you can rename into `give-me-the-odds` to properly answer the exercice.
+
+Or course in order to reproduce the executable, you will need the dependency `pyinstaller` installed. It can be done with the following command
+
+```pip install pyinstaller```
+
+
 # 3. Web usage
 In order to run the command_line interface usage, you do have to install the dependencies of `requirements.txt`
 
